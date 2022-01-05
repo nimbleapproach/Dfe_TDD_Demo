@@ -1,13 +1,14 @@
 using Moq;
 using System;
+using FluentAssertions;
 using Xunit;
 
 namespace DfE_Testing
 {
-    public class ReportingProblems
+    public class ReportingProblemsTests
 
 
-        // Some basic requirments
+        // Some basic requirements
         // needs a way for customers to report a problem e.g a pothole in the road, flytipping, litter etc
         // service for recording the report
 
@@ -17,27 +18,47 @@ namespace DfE_Testing
         // and maybe on the outcome of their report (this would be very useful for when a councillor reports a problem as they like to know what's happening
         //
 
+
+
+        // TDD resources 
+        // Visual Studio Series on Youtube
+        //  https://www.youtube.com/watch?v=HhRvW1b4IwM
+        // C# and other Languages with TDD
+        // https://tdd.tools/
+        // And of course Microsoft docs
+        /// https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test
+
     {
         [Fact]
         public void Create_A_Pothole_Report_Test()
         {
 
+            // Arrange
             var pothole = MakeAHole();
             pothole.ReportDate = DateTime.Now;
             pothole.ReportedBy = "Test User";
             pothole.ReportId=  Guid.NewGuid();
             pothole.ReportName = "Pothole Report";
-            var reportingService = new TestableReportingService;
-            reportingS(pothole);
+            // Act
+            var reportingService = new TestableReportingService(new Mock<ICRMService>(),new Mock<ICommsService>());
+            //Assert
+            reportingService.Report(pothole).Should().BeTrue();
 
         }
 
         [Fact]
         public void Create_A_CRM_Case_Test()
         {
-
+            //Arrange
+            Mock<ICRMService> service = new Mock<ICRMService>();
+            service.DefaultValue = DefaultValue.Mock;
+            //Act and Assert
+            service.Object.CreateCase().Should().NotBeEmpty();
 
         }
+
+
+
 
     // Test Helpers
 
@@ -57,7 +78,7 @@ namespace DfE_Testing
 
     // Classes
 
-    public abstract class ReportingProblemsBase
+    public abstract class ReportingProblems
     {
         public Guid ReportId { get; set; }
         public string CRMId {get;set;}
@@ -73,7 +94,7 @@ namespace DfE_Testing
 
     }
 
-    public class Pothole:ReportingProblemsBase
+    public class Pothole:ReportingProblems
     {
 
         public string PotholeSize {get;set;}
@@ -137,7 +158,7 @@ namespace DfE_Testing
         public Mock<ICommsService> comms;
         public Mock<ICRMService> crm;
 
-        TestableReportingService(Mock<ICRMService> crmSrv, Mock<ICommsService> commSrv): base (crmSrv.Object, commSrv.Object)
+        public TestableReportingService(Mock<ICRMService> crmSrv, Mock<ICommsService> commSrv): base (crmSrv.Object, commSrv.Object)
         {
             comms = commSrv;
             crm = crmSrv;

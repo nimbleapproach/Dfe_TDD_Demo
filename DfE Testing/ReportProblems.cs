@@ -6,8 +6,7 @@ using Xunit;
 namespace DfE_Testing
 {
     public class ReportingProblemsTests
-
-
+    {
         // Some basic requirements
         // needs a way for customers to report a problem e.g a pothole in the road, flytipping, litter etc
         // service for recording the report
@@ -27,8 +26,16 @@ namespace DfE_Testing
         // https://tdd.tools/
         // And of course Microsoft docs
         /// https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test
+        ///Nice intro to Xunit
+        /// https://auth0.com/blog/xunit-to-test-csharp-code/
+        /// 
 
-    {
+
+
+        //xUnit supports two different types of unit test, Fact and Theory
+
+
+        // Fact when we have some criteria that always must be met, regardless of data.
         [Fact]
         public void Create_A_Pothole_Report_Test()
         {
@@ -56,6 +63,21 @@ namespace DfE_Testing
             service.Object.CreateCase().Should().NotBeEmpty();
 
         }
+
+        //Theory on the other hand depends on set of parameters and data, our test will pass for some set of this data but not in all cases
+        //  A theory is a parametric unit test that allows you to represent a set of unit tests sharing the same structure.
+        //  Theories allow you to implement what is called data-driven testing, which is a testing approach heavily based on input data variation.
+        // useful for validation rules.
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void Validate_Is_Public_Highway_Input(bool isPublic)
+        { 
+            IRequestValidator validator = new RequestValidator();
+            validator.IsPublicHighwayValid(isPublic).Should().BeTrue(); 
+        }
+
 
 
 
@@ -132,6 +154,13 @@ namespace DfE_Testing
     }
 
 
+    public interface IRequestValidator
+    {
+        bool IsPublicHighwayValid(bool highwayCheck );
+
+        
+        }
+
     // Implementations
 
 
@@ -164,7 +193,20 @@ namespace DfE_Testing
             crm = crmSrv;
         }
 
+
+
     }
 
 
+    public class RequestValidator : IRequestValidator
+    {
+        public bool IsPublicHighwayValid(bool highwayCheck)
+        {
+           if (highwayCheck)
+            { 
+                return true;
+            }
+            return false;
+        }
+    }
 }

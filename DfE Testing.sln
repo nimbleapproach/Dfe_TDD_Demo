@@ -1,9 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31903.59
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DfE Testing", "DfE Testing\DfE Testing.csproj", "{BF79D84D-F027-42F3-ABB5-5B767D68BA2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DfE Testing", "DfE Testing\DfE Testing.csproj", "{BF79D84D-F027-42F3-ABB5-5B767D68BA2E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0A7C8288-CEA5-4244-B4F2-FC8AAACCA9F2}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

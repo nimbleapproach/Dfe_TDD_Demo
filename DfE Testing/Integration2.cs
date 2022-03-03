@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DfE_Testing
 {
-    class Integration2
+    public class Integration2
     {
     }
 }

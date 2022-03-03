@@ -46,17 +46,18 @@ namespace DfE_Testing1
         public void Create_A_Pothole_Report_Test()
         {
 
-            throw (new NotImplementedException());
+            //throw (new NotImplementedException());
+            var service = new CRMService();
+            service.AddReport().Should().NotBeEmpty();
+
 
         }
-
-
 
 
     }
 
 
-    public abstract class 
+   
 
     public class Pothole
     {
@@ -68,6 +69,15 @@ namespace DfE_Testing1
 
     public interface ICRMService
     {
-        string AddREport
+        string AddReport();
+    }
+
+
+    public class CRMService : ICRMService
+    {
+        public string AddReport()
+        {
+            return Guid.NewGuid().ToString();
+        }
     }
 }

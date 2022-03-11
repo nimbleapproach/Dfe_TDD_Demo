@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FluentAssertions;
+using Xunit;
 
 namespace DfE_Testing2
 {
@@ -36,5 +38,86 @@ namespace DfE_Testing2
     /// 
     public class Step2
     {
+        public class Step1
+        {
+            //xUnit supports two different types of unit test, Fact and Theory
+
+
+            // Fact when we have some criteria that always must be met, regardless of data.
+            [Fact]
+            public void Create_A_Pothole_Report_Test()
+            {
+
+                var pothole = MakeAHole();
+                ICRMService service = new CRMService();
+                service.AddPotholeReport(pothole).Should().NotBeEmpty();
+
+
+            }
+
+            public Pothole MakeAHole()
+            {
+                return new Pothole()
+                {
+                    Description = "A very big hole in the road",
+                    ImageURL = "https://unsplash.com/photos/-TQUERQGUZ8",
+                    IsHazard = true,
+                    IsPublicHighway = true,
+                    Latitude = "53.945692",
+                    Longitude = " -1.102211",
+                    PotholeSize = "dustbin lid",
+                };
+            }
+        }
+
+
+
+
+        public abstract class ReportingProblems
+        {
+            public Guid ReportId { get; set; }
+            public string CRMId { get; set; }
+            public string ReportName { get; set; }
+            public string Description { get; set; }
+            public string Latitude { get; set; }
+            public string Longitude { get; set; }
+            public string ImageURL { get; set; }
+            public string ReportedBy { get; set; }
+            public string Email { get; set; }
+            public string Mobile { get; set; }
+            public DateTime ReportDate { get; set; }
+
+
+        }
+
+        public class Pothole : ReportingProblems
+        {
+
+            public string PotholeSize { get; set; }
+            public bool IsPublicHighway { get; set; }
+            public bool IsHazard { get; set; }
+
+        }
+
+        public interface ICRMService
+        {
+            string AddPotholeReport(Pothole hole);
+        }
+
+
+        public class CRMService :ICRMService
+        {
+            
+
+            public string AddPotholeReport(Pothole hole)
+            {
+                return Guid.NewGuid().ToString();
+            }
+        }
+
+
+
+
+
     }
 }

@@ -57,16 +57,7 @@ namespace DfE_Testing1
     }
 
 
-   
-
-    public class Pothole
-    {
-        public string Description { get; set; }
-        public string Lat { get; set; }
-        public string Longitude { get; set; } 
-
-    }
-
+    
     public interface ICRMService
     {
         string AddReport();

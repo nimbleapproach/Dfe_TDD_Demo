@@ -10,51 +10,38 @@ using Xunit;
 
 namespace DfE_Testing3
 {
+ 
+    //Now at this point we've tested that the functionality for setting up the service, and ensuring a response is returned works.
+    //Now we want to check that part of the values that are returned are correct.
 
-    
-    // Some basic requirements
-    // needs a way for customers to report a problem e.g a pothole in the road, flytipping, litter etc
-    // service for recording the report
-
-    // the report needs to go into the councils CRM system
-
-    // need a way to update the customer with a CRM ref number via text / email
-    // and maybe on the outcome of their report (this would be very useful for when a councillor reports a problem as they like to know what's happening
-    //
-
-
-
-    // TDD resources 
-    // Visual Studio Series on Youtube
-    //  https://www.youtube.com/watch?v=HhRvW1b4IwM
-    // C# and other Languages with TDD
-    // https://tdd.tools/
-    // And of course Microsoft docs
-    /// https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test
-    ///Nice intro to Xunit
-    /// https://auth0.com/blog/xunit-to-test-csharp-code/
-    /// 
+    //We can also start setting up the test for ensuring the message is sent.
+    //Following on from our existing flow we don't want to add this into our implementation at this point- we're wanting to test 
+    //the functionality in isolation, ensuring the new test fails and our implementation comes after.
     public class Step3
     {
 
-        // Fact when we have some criteria that always must be met, regardless of data.
+        //Existing test refactored and updated from Step 2.
         [Fact]
         public void Create_A_Pothole_Report_Test()
         {
 
+            //Arrange
             var pothole = MakeAHole();
             ICRMService service = new CRMService();
+
+            //Act
             var response = service.AddPotholeReport(pothole);
+
+            //Assert
             response.CaseId.Should().NotBeEmpty();
-
-
         }
 
        
+        //New test to start ensuring functionality for sending is setup
         [Fact]
         public void Create_A_Report_Response_Test()
         {
-
+            //Arrange
             var message = new Message()
             {
                 Content = "Testing 1234",
@@ -62,12 +49,12 @@ namespace DfE_Testing3
                 RecipientAddress = "fred@testing.com",
                 Subject ="Test Message"
             };
+            //Act
             IMessage sender = new EmailService();
             var response = sender.SendMessage(message);
+
+            //Assert
             response.Should().BeTrue();
-
-
-
         }
 
 
@@ -169,7 +156,5 @@ namespace DfE_Testing3
             };
         }
     }
-
-
 }
 

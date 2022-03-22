@@ -7,17 +7,7 @@ namespace DfE_Testing
 {
     public class ReportingProblemsTests
     {
-        // Some basic requirements
-        // needs a way for customers to report a problem e.g a pothole in the road, flytipping, litter etc
-        // service for recording the report
-
-        // the report needs to go into the councils CRM system
-
-        // need a way to update the customer with a CRM ref number via text / email
-        // and maybe on the outcome of their report (this would be very useful for when a councillor reports a problem as they like to know what's happening
-        //
-
-
+        //xUnit supports two different types of unit test, Fact and Theory
 
         // TDD resources 
         // Visual Studio Series on Youtube
@@ -31,26 +21,30 @@ namespace DfE_Testing
         /// 
 
 
+        // Some basic requirements
+        // Needs a way for customers to report a problem e.g a pothole in the road etc.
+        // Service for recording the report
 
-        //xUnit supports two different types of unit test, Fact and Theory
+        // The report needs to go into the councils CRM system
 
+        // need a way to update the customer with a CRM ref number via text / email
 
         // Fact when we have some criteria that always must be met, regardless of data.
         [Fact]
         public void Create_A_Pothole_Report_Test()
         {
-
             // Arrange
             var pothole = MakeAHole();
             pothole.ReportDate = DateTime.Now;
             pothole.ReportedBy = "Test User";
             pothole.ReportId=  Guid.NewGuid();
             pothole.ReportName = "Pothole Report";
+
             // Act
             var reportingService = new TestableReportingService(new Mock<ICRMService>(),new Mock<ICommsService>());
+
             //Assert
             reportingService.Report(pothole).Should().BeTrue();
-
         }
 
         [Fact]
@@ -75,15 +69,10 @@ namespace DfE_Testing
         public void Validate_Is_Public_Highway_Input(bool isPublic)
         { 
             IRequestValidator validator = new RequestValidator();
-            validator.IsPublicHighwayValid(isPublic).Should().BeTrue(); 
+            validator.IsPublicHighwayValid(isPublic).Should().Be(isPublic); 
         }
 
-
-
-
-
-    // Test Helpers
-
+        // Test Helper
         public Pothole MakeAHole()
         {
             return new Pothole(){ 
@@ -99,7 +88,6 @@ namespace DfE_Testing
 
 
     // Classes
-
     public abstract class ReportingProblems
     {
         public Guid ReportId { get; set; }
@@ -156,14 +144,10 @@ namespace DfE_Testing
 
     public interface IRequestValidator
     {
-        bool IsPublicHighwayValid(bool highwayCheck );
-
-        
-        }
+        bool IsPublicHighwayValid(bool highwayCheck );      
+    }
 
     // Implementations
-
-
     public class ReportingService : IReportingService
     {
         ICommsService commsService;
@@ -192,9 +176,6 @@ namespace DfE_Testing
             comms = commSrv;
             crm = crmSrv;
         }
-
-
-
     }
 
 

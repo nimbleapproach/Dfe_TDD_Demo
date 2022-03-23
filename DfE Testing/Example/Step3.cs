@@ -14,7 +14,7 @@ namespace DfE_Testing3
     //Now at this point we've tested that the functionality for setting up the service, and ensuring a response is returned works.
     //Now we want to check that part of the values that are returned are correct.
 
-    //We can also start setting up the test for ensuring the message is sent.
+    //We can also start setting up the test for ensuring the message is sent, and then the implementations for these will meet in a later iteration.
     //Following on from our existing flow we don't want to add this into our implementation at this point- we're wanting to test 
     //the functionality in isolation, ensuring the new test fails and our implementation comes after.
     public class Step3

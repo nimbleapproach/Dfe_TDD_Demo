@@ -24,9 +24,7 @@ namespace DfE_Testing
         // Some basic requirements
         // Needs a way for customers to report a problem e.g a pothole in the road etc.
         // Service for recording the report
-
         // The report needs to go into the councils CRM system
-
         // need a way to update the customer with a CRM ref number via text / email
 
         // Fact when we have some criteria that always must be met, regardless of data.
